@@ -201,9 +201,8 @@ class SkipList:
         while x%2 == 0 and x > 0:
             x /= 2
             level += 1
-
-        if level > self.max_height
-            level = self.max_height 
+            if level == self.max_height:
+                break
 
         return level
 
