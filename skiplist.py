@@ -2,13 +2,9 @@ import random
 
 class Node:
 
-    def __init__( self, data, level=None ):
-        self.max_height = 3 # TODO remove
+    def __init__( self, data, level=0 ):
         self.data = data 
-        if level is None:
-            self.level = random.randint(0, self.max_height)
-        else:
-            self.level = level
+        self.level = level
 
         self.skiplist = [None] * (self.level + 1) # must be level + 1
         self.skipindex = [1] + ([0] * self.level)
@@ -42,6 +38,11 @@ class SkipList:
             new_node.skipindex = [1] * (self.max_height + 1)
             self.head = new_node
             return
+
+        if level is None:
+            level = random.randint(0, self.max_height)
+        else:
+            level = level
 
         new_node = Node(data, level)
 
