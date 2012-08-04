@@ -210,10 +210,14 @@ class SkipList:
 
         while node is not None:
             node.level = self._get_level(i)
-            node.skiplist = node.skiplist[0:1] + ([None] * (node.level))
-            for lvl in range(1, node.level+1):
-                prev[lvl].skiplist[lvl] = node
-                prev[lvl] = node
+            node.skiplist = node.skiplist[0:1] + ([None] * node.level)
+            node.skipindex = [1] * (node.level+1)
+            for lvl in range(1, self.max_height+1):
+                if lvl <= node.level:
+                    prev[lvl].skiplist[lvl] = node
+                    prev[lvl] = node
+                else:
+                    prev[lvl].skipindex[lvl] += 1
 
             i += 1
             node = node.skiplist[0]

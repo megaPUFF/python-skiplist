@@ -490,8 +490,8 @@ class TestSkipListFunctions(unittest.TestCase):
         self.assertEqual(sl.get_at(0).skiplist[1].data, 3)
         self.assertEqual(sl.get_at(0).skiplist[2], None)
         self.assertEqual(sl.get_at(0).skiplist[3], None)
-        #self.assertEqual(sl.get_at(0).skipindex[0], 1)
-        #self.assertEqual(sl.get_at(0).skipindex[1], 2)
+        self.assertEqual(sl.get_at(0).skipindex[0], 1)
+        self.assertEqual(sl.get_at(0).skipindex[1], 2)
         #self.assertEqual(sl.get_at(0).skipindex[2], None) # ?
         #self.assertEqual(sl.get_at(0).skipindex[3], None)
 
