@@ -470,6 +470,22 @@ class TestSkipListFunctions(unittest.TestCase):
         self.assertEqual(sl._get_level(14), 1)
         self.assertEqual(sl._get_level(16), 4)
 
+    def test__get_level(self):
+        sl = SkipList(3)
+
+        for x in range(1, 101, 2):
+            self.assertEqual(sl._get_level(x), 0)
+
+        self.assertEqual(sl._get_level(0), sl.max_height)
+        self.assertEqual(sl._get_level(2), 1)
+        self.assertEqual(sl._get_level(4), 2)
+        self.assertEqual(sl._get_level(6), 1)
+        self.assertEqual(sl._get_level(8), 3)
+        self.assertEqual(sl._get_level(10), 1)
+        self.assertEqual(sl._get_level(12), 2)
+        self.assertEqual(sl._get_level(14), 1)
+        self.assertEqual(sl._get_level(16), 3)
+
     def test_relevel(self):
         sl = SkipList()
 
