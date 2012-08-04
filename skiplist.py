@@ -1,12 +1,12 @@
 import random
 
-MAX_HEIGHT = 3
 class Node:
 
     def __init__( self, data, level=None ):
+        self.max_height = 3 # TODO remove
         self.data = data 
         if level is None:
-            self.level = random.randint(0, MAX_HEIGHT)
+            self.level = random.randint(0, self.max_height)
         else:
             self.level = level
 
@@ -22,23 +22,24 @@ class SkipList:
     """ singly linked skiplist, ordered. assume no duplicates """
     count = 0
 
-    def __init__( self ):
+    def __init__( self, max_height=3 ):
         self.head = None
+        self.max_height = max_height
 
     def insert( self, data, level=None ):
         self.count += 1
 
         # empty
         if self.head is None:
-            new_node = Node(data, MAX_HEIGHT)
+            new_node = Node(data, self.max_height)
             self.head = new_node
             return
 
         # first elt
         if self.head.data > data:
-            new_node = Node(data, MAX_HEIGHT)
-            new_node.skiplist = [self.head] * (MAX_HEIGHT + 1) # old head
-            new_node.skipindex = [1] * (MAX_HEIGHT + 1)
+            new_node = Node(data, self.max_height)
+            new_node.skiplist = [self.head] * (self.max_height + 1) # old head
+            new_node.skipindex = [1] * (self.max_height + 1)
             self.head = new_node
             return
 
@@ -88,7 +89,7 @@ class SkipList:
                 new_head.skiplist.extend(self.head.skiplist[new_head.level+1:])
                 new_head.skipindex.extend( \
                     [ x-1 for x in self.head.skipindex[new_head.level+1:] ])
-                new_head.level = MAX_HEIGHT
+                new_head.level = self.max_height
                 self.head = new_head
 
             self.count -= 1
@@ -191,8 +192,9 @@ class SkipList:
 
     def _get_level( self, x ):
         """x=0 will return max_height"""
+# TODO need to implement max_height
         if x == 0:
-            return MAX_HEIGHT
+            return self.max_height
         level = 0
 
         while x%2 == 0 and x > 0:

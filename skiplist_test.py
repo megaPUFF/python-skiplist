@@ -2,7 +2,6 @@ import unittest
 
 from skiplist import Node
 from skiplist import SkipList
-from skiplist import MAX_HEIGHT
 
 from random import shuffle
 
@@ -48,7 +47,7 @@ class TestSkipListFunctions(unittest.TestCase):
         sl = SkipList()
         sl.insert( 1 )
         self.assertEqual(sl.head.data, 1)
-        self.assertEqual(sl.head.skiplist.count(None), MAX_HEIGHT+1)
+        self.assertEqual(sl.head.skiplist.count(None), sl.max_height+1)
 
     def test_insert_r_second_1(self):
         sl = SkipList()
@@ -57,7 +56,7 @@ class TestSkipListFunctions(unittest.TestCase):
         self.assertEqual(sl.head.data, 1)
         self.assertEqual(sl.head.skiplist[0].data, 2)
         self.assertEqual(sl.get_at(0).skiplist.count(None), 0)
-        self.assertEqual(sl.get_at(1).skiplist.count(None), MAX_HEIGHT+1)
+        self.assertEqual(sl.get_at(1).skiplist.count(None), sl.max_height+1)
 
     def test_insert_r_second_2(self):
         sl = SkipList()
@@ -65,7 +64,7 @@ class TestSkipListFunctions(unittest.TestCase):
         sl.insert( 2, 0 )
         self.assertEqual(sl.head.data, 1)
         self.assertEqual(sl.head.skiplist[0].data, 2)
-        self.assertEqual(sl.get_at(0).skiplist.count(None), MAX_HEIGHT)
+        self.assertEqual(sl.get_at(0).skiplist.count(None), sl.max_height)
         self.assertEqual(sl.get_at(1).skiplist.count(None), 1)
 
     def test_insert_r_third_1(self):
@@ -78,7 +77,7 @@ class TestSkipListFunctions(unittest.TestCase):
         self.assertEqual(sl.head.skiplist[0].skiplist[0].data, 3)
         self.assertEqual(sl.get_at(0).skiplist.count(None), 0)
         self.assertEqual(sl.get_at(1).skiplist.count(None), 0)
-        self.assertEqual(sl.get_at(2).skiplist.count(None), MAX_HEIGHT+1)
+        self.assertEqual(sl.get_at(2).skiplist.count(None), sl.max_height+1)
 
     def test_insert_r_third_2(self):
         sl = SkipList()
@@ -94,25 +93,25 @@ class TestSkipListFunctions(unittest.TestCase):
         sl.insert( 1 )
         sl.insert( 2, 1 )
         sl.insert( 3, 0 )
-        self.assertEqual(sl.get_at(0).skiplist.count(None), MAX_HEIGHT-1)
+        self.assertEqual(sl.get_at(0).skiplist.count(None), sl.max_height-1)
         self.assertEqual(sl.get_at(1).skiplist.count(None), 1)
         self.assertEqual(sl.get_at(2).skiplist.count(None), 1)
 
     def test_insert_r_index_1(self):
         sl = SkipList()
-        sl.insert( 1, MAX_HEIGHT )
+        sl.insert( 1, sl.max_height )
         sl.insert( 2, 1 )
-        sl.insert( 3, MAX_HEIGHT )
+        sl.insert( 3, sl.max_height )
         self.assertEqual(sl.get_at(0).skipindex[0], 1)
         self.assertEqual(sl.get_at(0).skipindex[1], 1)
         self.assertEqual(sl.get_at(0).skipindex[2], 2)
-        self.assertEqual(sl.get_at(0).skipindex[MAX_HEIGHT], 2)
+        self.assertEqual(sl.get_at(0).skipindex[sl.max_height], 2)
         self.assertEqual(sl.get_at(1).skipindex[0], 1)
         self.assertEqual(sl.get_at(1).skipindex[1], 1)
 
     def test_insert_r_index_2(self):
         sl = SkipList()
-        sl.insert( 1, MAX_HEIGHT )
+        sl.insert( 1, sl.max_height )
         sl.insert( 2, 0 )
         sl.insert( 3, 1 )
         self.assertEqual(sl.get_at(0).skipindex[0], 1)
@@ -122,11 +121,11 @@ class TestSkipListFunctions(unittest.TestCase):
 
     def test_insert_r_index_3(self):
         sl = SkipList()
-        sl.insert( 1, MAX_HEIGHT )
+        sl.insert( 1, sl.max_height )
         sl.insert( 2, 0 )
         sl.insert( 3, 1 )
         sl.insert( 4, 1 )
-        sl.insert( 5, MAX_HEIGHT )
+        sl.insert( 5, sl.max_height )
 
         self.assertEqual(sl.get_at(3).skipindex[0], 1)
         self.assertEqual(sl.get_at(3).skipindex[1], 1)
@@ -136,15 +135,15 @@ class TestSkipListFunctions(unittest.TestCase):
         self.assertEqual(sl.get_at(0).skipindex[0], 1)
         self.assertEqual(sl.get_at(0).skipindex[1], 2)
         self.assertEqual(sl.get_at(0).skipindex[2], 4)
-        self.assertEqual(sl.get_at(0).skipindex[MAX_HEIGHT], 4)
+        self.assertEqual(sl.get_at(0).skipindex[sl.max_height], 4)
 
     def test_insert_r_index_4(self):
         # middle insert
         sl = SkipList()
-        sl.insert( 1, MAX_HEIGHT )
+        sl.insert( 1, sl.max_height )
         sl.insert( 2, 0 )
         sl.insert( 4, 1 )
-        sl.insert( 5, MAX_HEIGHT )
+        sl.insert( 5, sl.max_height )
         sl.insert( 3, 2 )
 
         self.assertEqual(sl.get_at(3).skipindex[0], 1)
@@ -158,12 +157,12 @@ class TestSkipListFunctions(unittest.TestCase):
         self.assertEqual(sl.get_at(0).skipindex[0], 1)
         self.assertEqual(sl.get_at(0).skipindex[1], 2)
         self.assertEqual(sl.get_at(0).skipindex[2], 2)
-        self.assertEqual(sl.get_at(0).skipindex[MAX_HEIGHT], 4)
+        self.assertEqual(sl.get_at(0).skipindex[sl.max_height], 4)
 
     def test_insert_r_index_5(self):
         sl = SkipList()
-        sl.insert( 1, MAX_HEIGHT )
-        sl.insert( 5, MAX_HEIGHT )
+        sl.insert( 1, sl.max_height )
+        sl.insert( 5, sl.max_height )
         sl.insert( 2, 0 )
         sl.insert( 4, 1 )
         sl.insert( 3, 1 )
@@ -176,7 +175,7 @@ class TestSkipListFunctions(unittest.TestCase):
         self.assertEqual(sl.get_at(0).skipindex[0], 1)
         self.assertEqual(sl.get_at(0).skipindex[1], 2)
         self.assertEqual(sl.get_at(0).skipindex[2], 4)
-        self.assertEqual(sl.get_at(0).skipindex[MAX_HEIGHT], 4)
+        self.assertEqual(sl.get_at(0).skipindex[sl.max_height], 4)
 
     def test_remove_r(self):
         sl = SkipList()
@@ -193,8 +192,8 @@ class TestSkipListFunctions(unittest.TestCase):
         sl.remove( 1 )
 
         self.assertEqual(sl.head.data, 2)
-        self.assertEqual(sl.head.level, MAX_HEIGHT)
-        for i in range(MAX_HEIGHT+1):
+        self.assertEqual(sl.head.level, sl.max_height)
+        for i in range(sl.max_height+1):
             self.assertIsNone(sl.head.skiplist[i])
 
     def test_remove_r_last(self):
@@ -205,7 +204,7 @@ class TestSkipListFunctions(unittest.TestCase):
         sl.remove( 2 )
 
         self.assertEqual(sl.head.data, 1)
-        for i in range(MAX_HEIGHT+1):
+        for i in range(sl.max_height+1):
             self.assertIsNone(sl.head.skiplist[i])
 
     def test_remove_r_middle_1(self):
@@ -456,12 +455,12 @@ class TestSkipListFunctions(unittest.TestCase):
             sl.remove( i / 2 )
 
     def test__get_level(self):
-        sl = SkipList()
+        sl = SkipList(15)
 
         for x in range(1, 101, 2):
             self.assertEqual(sl._get_level(x), 0)
 
-        self.assertEqual(sl._get_level(0), MAX_HEIGHT)
+        self.assertEqual(sl._get_level(0), sl.max_height)
         self.assertEqual(sl._get_level(2), 1)
         self.assertEqual(sl._get_level(4), 2)
         self.assertEqual(sl._get_level(6), 1)
