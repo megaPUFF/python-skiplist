@@ -6,7 +6,8 @@ class Node:
         self.data = data 
         self.level = level
 
-        self.skiplist = [None] * (self.level + 1) # must be level + 1
+        # length must be level + 1
+        self.skiplist = [None] * (self.level + 1)
         self.skipindex = [1] + ([0] * self.level)
 
     def __str__( self ):
@@ -193,7 +194,6 @@ class SkipList:
 
     def _get_level( self, x ):
         """x=0 will return max_height"""
-# TODO need to implement max_height
         if x == 0:
             return self.max_height
         level = 0
@@ -201,6 +201,9 @@ class SkipList:
         while x%2 == 0 and x > 0:
             x /= 2
             level += 1
+
+        if level > self.max_height
+            level = self.max_height 
 
         return level
 
