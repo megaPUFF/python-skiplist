@@ -492,16 +492,42 @@ class TestSkipListFunctions(unittest.TestCase):
         self.assertEqual(sl.get_at(0).skiplist[3], None)
         self.assertEqual(sl.get_at(0).skipindex[0], 1)
         self.assertEqual(sl.get_at(0).skipindex[1], 2)
-        #self.assertEqual(sl.get_at(0).skipindex[2], None) # ?
-        #self.assertEqual(sl.get_at(0).skipindex[3], None)
 
         self.assertEqual(sl.get_at(1).level, 0)
         self.assertEqual(sl.get_at(1).skiplist[0].data, 3)
         self.assertEqual(sl.get_at(1).skipindex[0], 1)
 
         self.assertEqual(sl.get_at(2).level, 1)
-        #self.assertEqual(sl.get_at(2).skiplist[0].data, None)
-        #self.assertEqual(sl.get_at(2).skiplist[1].data, None)
+        self.assertEqual(sl.get_at(2).skiplist[0], None)
+        self.assertEqual(sl.get_at(2).skiplist[1], None)
+
+    def test_relevel_2(self):
+        sl = SkipList( 3 )
+        sl.insert( 1 )
+        sl.insert( 2 )
+        sl.insert( 3 )
+        sl.insert( 4 )
+        sl.insert( 5 )
+        sl.insert( 6 )
+        sl.insert( 7 )
+        sl.insert( 8 )
+        sl.insert( 9 )
+
+        sl.relevel()
+
+        self.assertEqual(sl.get_at(0).level, 3)
+        self.assertEqual(sl.get_at(0).skiplist[0].data, 2)
+        self.assertEqual(sl.get_at(0).skiplist[1].data, 3)
+        self.assertEqual(sl.get_at(0).skiplist[2].data, 5)
+        self.assertEqual(sl.get_at(0).skiplist[3].data, 9)
+        self.assertEqual(sl.get_at(0).skipindex[0], 1)
+        self.assertEqual(sl.get_at(0).skipindex[1], 2)
+        self.assertEqual(sl.get_at(0).skipindex[2], 4)
+        self.assertEqual(sl.get_at(0).skipindex[3], 8)
+
+        self.assertEqual(sl.get_at(2).level, 1)
+        #self.assertEqual(sl.get_at(2).skiplist[0], None)
+        #self.assertEqual(sl.get_at(2).skiplist[1], None)
 
     def test_stress(self):
         limit = 3000

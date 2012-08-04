@@ -127,17 +127,9 @@ class SkipList:
 
     def get_at( self, index ):
         """returns the Node at index @index in this SkipList"""
-        if index >= self.count:
-            return None
 
-        node = self.head
+        # return self._get_at( index )
 
-        for i in range(index):
-            node = node.skiplist[0]
-
-        return node
-
-        """
         if index < 0:
             return None
 
@@ -148,7 +140,18 @@ class SkipList:
             return self.head
 
         return self._get_at_r( index, self.head, self.head.level, 0 )
-        """
+
+    def _get_at( self, index ):
+        """Simple, non-skip version"""
+        if index >= self.count:
+            return None
+
+        node = self.head
+
+        for i in range(index):
+            node = node.skiplist[0]
+
+        return node
 
     def _get_at_r( self, index, node, level, current_index ):
         if node.skiplist[level] is None or \
@@ -201,8 +204,9 @@ class SkipList:
             return self._find_r( data, node.skiplist[level], level )
 
     def relevel( self ):
-        node = self.head
-        node.skiplist = node.skiplist[0:1] + ([None] * self.max_height)
+        for i in range(1, len(self.head.skiplist)):
+            self.head.skiplist[i] = None
+        self.head.skipindex = [1] * (self.max_height+1)
 
         prev = [self.head] * (self.max_height + 1)
         node = self.head.skiplist[0]
